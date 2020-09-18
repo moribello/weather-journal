@@ -22,23 +22,20 @@ function buttonClick(evt){
 
 }
 
-app.get('/', function(req, res){
-    res.send("hellow world");
-})
 /* Function to GET Web API Data*/
-// const getWeather = async (baseURL, zipCode, key)=>{
-//
-//   const res = await fetch(baseURL+zipCode+key)
-//   try {
-//
-//     const data = await res.json();
-//     console.log(data)
-//     return data;
-//   }  catch(error) {
-//     console.log("error", error);
-//     // appropriately handle the error
-//   }
-// }
+const getWeather = async (baseURL, zipCode, key)=>{
+
+   const res = await fetch(baseURL+zipCode+key)
+   try {
+
+     const data = await res.json();
+     console.log(data)
+     return data;
+   }  catch(error) {
+     console.log("error", error);
+     // appropriately handle the error
+   }
+ }
 // /* Function to POST data */
 // const postData = async ( url = '', data = {})=>{
 //     console.log(data);
