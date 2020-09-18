@@ -21,7 +21,7 @@ body{
 }
 
 .entry{
-    background: rgba(59, 74, 107, .4);
+    background: #cccccc;
 }
 
 #entryHolder{
@@ -40,6 +40,9 @@ body{
 
 }
 
+#generate{
+    z-index: 3;
+}
 .headline {
 
 }
