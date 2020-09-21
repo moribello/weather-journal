@@ -19,23 +19,27 @@ function buttonClick(evt){
     const feelToday = document.getElementById('feelings').value //get value for feelings from web page
     //getData(fullURL);
     console.log(`Feeling ${feelToday}`);
-
+    getAPIData(fullURL)
 }
+//POST data
+const getAPIData = async(baseURL, zip, apiKEY) => {
 
-/* Function to GET Web API Data*/
-const getWeather = async (baseURL, zipCode, key)=>{
+    const request = await fetch(url, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+});
+try {
+  const newData = await response.json();
+  return newData;
+} catch (error) {
+  console.log("error", error);
+}
+};
 
-   const res = await fetch(baseURL+zipCode+key)
-   try {
-
-     const data = await res.json();
-     console.log(data)
-     return data;
-   }  catch(error) {
-     console.log("error", error);
-     // appropriately handle the error
-   }
- }
 // /* Function to POST data */
 // const postData = async ( url = '', data = {})=>{
 //     console.log(data);
