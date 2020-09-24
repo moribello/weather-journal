@@ -5,62 +5,78 @@ const apiKey = '&APPID=823ffab6e94c31871a1e73f0a8bc0149'// Personal API Key for 
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
-console.log(newDate);
+//Create a human-friendly date
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+let dateString = `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`
+console.log(`Today is ${dateString}`);
 
 // Event listener to add function to existing HTML DOM element
 document.getElementById('generate').addEventListener('click', buttonClick);
 
 /* Function called by event listener */
 function buttonClick(evt){
-    console.log('Button clicked')
-    const zipCode =  document.getElementById('zip').value; //get zip code from web page
-    let fullURL = baseURL+zipCode+apiKey; //create full URL path using base URL, provided zip code, and apiKEY
-    console.log(fullURL)
-    const feelToday = document.getElementById('feelings').value //get value for feelings from web page
-    //getData(fullURL);
-    console.log(`Feeling ${feelToday}`);
-    getAPIData(fullURL)
-}
-//POST data
-const getAPIData = async(baseURL, zip, apiKEY) => {
+    const feelText = document.getElementById('feelings').value; //variable for text in 'How are you feeling today?' field
+    const zipCode = document.getElementById("zip").value; //variable for text in 'Zipcode' field
+    console.log(zipCode);
+    getAPIData(baseURL, zipCode, apiKey)
+      .then(function (APItemperature) {
+        postData('http://localhost:8000/addWeather', { temperature: APItemperature, date: newDate, userResponse: feelText })
+          // update UI
+          .then(function () {
+            updateUI()
+          })
+      })
+  }
+//get API DATA function called above
+const getAPIData = async (baseURL, zipCode, apiKey) => {
+    const response = await fetch(baseURL + zipCode + apiKey)
+    console.log(response);
+    try {
+      const newData = await response.json();
+      console.log(newData);
+      return newData;
+    } catch (error) {
+      console.log("error", error); //deal with error
+    }
+  };
 
-    const request = await fetch(url, {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
-});
-try {
-  const newData = await response.json();
-  return newData;
-} catch (error) {
-  console.log("error", error);
-}
-};
+// Async postData function called during button click event
+const postData = async (url = '', data = {}) => {
+    const postRequest = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+    },
+      body: JSON.stringify(data),
+    });
+    try {
+      const newData = await postRequest.json();
+      return newData;
+    }
+    catch (error) {
+      console.log('Error during POST: ', error); //signal error during POST attempt;
+    }
+  }
 
-// /* Function to POST data */
-// const postData = async ( url = '', data = {})=>{
-//     console.log(data);
-//  //   const zipCode =  document.getElementById('zip').value;
-//         const response = await fetch(url, {
-//       method: 'POST',
-//       credentials: 'same-origin',
-//       headers: {
-//           'Content-Type': 'application/json',
-//       },
-//      // Body data type must match "Content-Type" header
-//       body: JSON.stringify(data),
-//     });
-//
-//         try {
-//             const newData = await response.json();
-//             console.log(newData);
-//             return newData;
-//       } catch(error) {
-//       console.log("error", error);
-//       }
-//   }
-
-/* Function to GET Project Data */
+//Update the UI using data retrieved from API
+const updateUI = async () => {
+    const request = await fetch('http://localhost:8000/all');
+    try {
+      const allData = await request.json();
+      let currentDate = allData.Date;
+      let currentTemp = allData.temperature.main.temp;
+      let userResp = allData.userResponse;
+      let currentCity = allData.temperature.name;
+      console.log(`Today's date: ${dateString}`);
+      console.log(`Current temperature: ${currentTemp}`);
+      console.log(`Current city: ${currentCity}`);
+      console.log(allData);
+      document.getElementById('date').innerHTML = dateString;
+      document.getElementById('temp').innerHTML = currentTemp;
+      document.getElementById('content').innerHTML = allData.userResponse;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
