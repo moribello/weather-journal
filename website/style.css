@@ -47,8 +47,8 @@ body{
 
 #recentEntry{
     grid-area: mre;
-    display: flex;
-    flex-display: column;
+    display: block;
+    flex-display: row;
     padding-left: 15px;
 }
 
@@ -78,22 +78,59 @@ body{
 }
 
 #entryHolder{
-
+    max-width: 85%;
+    display: grid;
+    grid-template-columns: 75% 25%;
+    grid-template-rows: repeat(4, 30px) 100px;
+    grid-gap: 1px;
+    grid-template-areas: 
+        "datea icona"
+        "citya icona"
+        "tempa tempa"
+        "weatha weatha"
+        "feela feela";
+    margin-left: 25px;
+    background-color: #dddddd;
 }
 
 #date{
-
+    grid-area: datea;
+    flex-direction: row;
+    padding-left: 15px;
 }
 
 #temp{
+    grid-area: tempa;
+    padding-left: 15px;
+}
 
+#currentCity{
+    grid-area: citya;
+    flex-direction: row;
+    padding-left: 15px;
+}
+
+#currentWeather{
+    grid-area: weatha;
+    padding-left: 15px;
 }
 
 #content{
-
+    grid-area: feela;
+    padding-left: 15px;
 }
 
+#weatherIcon{
+    grid-area: icona;
+    flex-direction: column;
+    max-width: 100px;
+    padding: 0px 20px;
+    justify-content: center;
+}
 
+#weatherIcon img{
+    max-width: 100px;
+}
 .title{
 
 }
