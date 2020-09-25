@@ -78,16 +78,15 @@ body{
 }
 
 #entryHolder{
-    max-width: 85%;
+    max-width: 75%;
     display: grid;
-    grid-template-columns: 75% 25%;
-    grid-template-rows: repeat(4, 30px) 100px;
-    grid-gap: 1px;
+    grid-template-columns: 65% 35%;
+    grid-template-rows: repeat(4, 30px) 200px;
+    grid-gap: 5px;
     grid-template-areas: 
         "datea icona"
-        "citya icona"
-        "tempa tempa"
-        "weatha weatha"
+        "tempa icona"
+        "weatha weathDes"
         "feela feela";
     margin-left: 25px;
     background-color: #dddddd;
@@ -104,12 +103,6 @@ body{
     padding-left: 15px;
 }
 
-#currentCity{
-    grid-area: citya;
-    flex-direction: row;
-    padding-left: 15px;
-}
-
 #currentWeather{
     grid-area: weatha;
     padding-left: 15px;
@@ -120,16 +113,26 @@ body{
     padding-left: 15px;
 }
 
+#weathDesc{
+    grid-area: weathDes;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    padding-left: auto;
+    padding-right: auto;
+}
+
 #weatherIcon{
     grid-area: icona;
-    flex-direction: column;
-    max-width: 100px;
-    padding: 0px 20px;
+    flex-direction: row;
     justify-content: center;
+    text-align: center;
 }
 
 #weatherIcon img{
-    max-width: 100px;
+    margin-top: -20px;
+    -webkit-filter: drop-shadow(5px 5px 5px #222); /*Adds drop shadow to weather icon so it's easier to see. */
+    filter: drop-shadow(5px 5px 5px #222);
 }
 .title{
 
