@@ -1,5 +1,5 @@
 /* Global Variables */
-const baseURL = 'https://api.openweathermap.org/data/2.5/weather?q='
+const baseURL = 'https://api.openweathermap.org/data/2.5/weather?zip='
 const apiKey = '&APPID=823ffab6e94c31871a1e73f0a8bc0149'// Personal API Key for OpenWeatherMap API
 
 // Create a new date instance dynamically with JS
@@ -74,7 +74,7 @@ const updateUI = async () => {
                 let iconURL = `http://openweathermap.org/img/wn/${weathIcon}@2x.png`
             document.getElementById('date').innerHTML = dateString;
             document.getElementById('temp').innerHTML = `Current temperature: ${friendlyTemp}\xB0 F`;
-            document.getElementById('currentWeather').innerHTML = `Current weather in ${currentCity}: ${weathFull}` 
+            document.getElementById('currentWeather').innerHTML = `Current weather in ${currentCity}: ${weathFull}`
             document.getElementById('content').innerHTML = `Feeling: ${allData.userResponse}`;
             document.getElementById('weatherIcon').innerHTML = `<img src="${iconURL}" alt="${currentWeath}">` //replace path for current weather icon
             document.getElementById('weathDesc').innerHTML = currentWeath;
